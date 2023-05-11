@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import App from "./components/App";
 import { ThemeProvider } from "@emotion/react";
-import Theme from "./theme";
+import Theme from "./components/theme";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>

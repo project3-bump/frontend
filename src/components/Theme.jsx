@@ -54,50 +54,48 @@ const Theme = createTheme({
 
 	// primary and secondary palette
 	palette: {
-		mode: "light",
+		// mode: "light",
 		primary: {
 			main: "#325A55",
 		},
 		secondary: {
 			main: "#FDF1E3",
 		},
-		customPalette: {
-			smiley5: {
-				main: "#149200",
-			},
-			smiley4: {
-				main: "#87C860",
-			},
-			smiley3: {
-				main: "#F2CB00",
-			},
-			smiley2: {
-				main: "#FF9900",
-			},
-			smiley1: {
-				main: "#FF0000",
-			},
-			smiley0: {
-				main: "#C7C7C7",
-			},
-			smiley5Backing: {
-				main: "#C0EAAD",
-			},
-			smiley4Backing: {
-				main: "#E5FFD9",
-			},
-			smiley3Backing: {
-				main: "#FEFFC8",
-			},
-			smiley2Backing: {
-				main: "#FFEABC",
-			},
-			smiley1Backing: {
-				main: "#FFDDD6",
-			},
-			smiley0Backing: {
-				main: "#F3F3F3",
-			},
+		smiley5: {
+			main: "#149200",
+		},
+		smiley4: {
+			main: "#87C860",
+		},
+		smiley3: {
+			main: "#F2CB00",
+		},
+		smiley2: {
+			main: "#FF9900",
+		},
+		smiley1: {
+			main: "#FF0000",
+		},
+		smiley0: {
+			main: "#C7C7C7",
+		},
+		smiley5Backing: {
+			main: "#C0EAAD",
+		},
+		smiley4Backing: {
+			main: "#E5FFD9",
+		},
+		smiley3Backing: {
+			main: "#FEFFC8",
+		},
+		smiley2Backing: {
+			main: "#FFEABC",
+		},
+		smiley1Backing: {
+			main: "#FFDDD6",
+		},
+		smiley0Backing: {
+			main: "#F3F3F3",
 		},
 	},
 });
