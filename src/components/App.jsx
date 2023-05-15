@@ -1,20 +1,35 @@
 import { Typography, AppBar, Grid, Button, CssBaseline } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import DrawerComp from "./DrawerComp";
-import DateCard from "./DateCard";
-import Dashboard from "./Dashboard";
+import DateCard from "./Dashboard/DateCard";
+import Dashboard from "./Dashboard/Dashboard";
+import Notifications from "./Dashboard/Notifications";
 
 const App = () => {
+
+	// initializes and sets dateState
+	const date = new Date();
+	const formattedDate = {
+		month: date.toLocaleString("default", { month: "long" }),
+		day: date.toLocaleString("default", { weekday: "long" }),
+		date: date.getDate(),
+		time: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+	};
+
 	// state for current date and time
-	const [todaysDateState, setTodaysDateState] = useState();
+	const [todaysDateState, setTodaysDateState] = useState(formattedDate);
 
-	useEffect(() => {
-		const currentDate = new Date();
-		setTodaysDateState(currentDate);
+	const handleDateDebug = () => {
+		const date = new Date();
+		const formattedDate = {
+			month: date.toLocaleString("default", { month: "long" }),
+			day: date.toLocaleString("default", { weekday: "long" }),
+			date: date.getDate(),
+			time: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+		};
+		setTodaysDateState(formattedDate);
 		console.log(todaysDateState);
-	}, []);
-
-	// const handleDebug =
+	};
 
 	// state for storing user data after retrieval from DB
 	const [userState, setUserState] = useState([]);
@@ -25,12 +40,12 @@ const App = () => {
 
 	return (
 		<>
-			{/* use MUI Grid for all our layouts. */}
 			<Grid
 				container
 				spacing="0px"
 				direction="row"
 				alignItems="center"
+				sx={{ backgroundColor: "secondary.main" }}
 			>
 				{/* this grid item is for the universal drawer which persists on all pages.  */}
 				<Grid
@@ -39,8 +54,15 @@ const App = () => {
 				>
 					<DrawerComp />
 				</Grid>
-				{/* the following component block is for conditional rendering of dashboard / messages / calendar */}
-				<Dashboard />
+
+				{/* this code block is the start of all items to the right of the drawer */}
+				<Grid
+					item
+					xs={9}
+				>
+					{/* define the component to be rendered here */}
+					<Dashboard todaysDateState={todaysDateState} />
+				</Grid>
 			</Grid>
 		</>
 	);
