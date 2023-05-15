@@ -1,6 +1,4 @@
 import { Grid } from "@mui/material";
-import DrawerComp from "./DrawerComp";
-import DateCard from "./DateCard";
 import React, { useState, useEffect } from "react";
 
 import MessageSelectCoworkers from "./MessageSelectCoworkers";
@@ -37,19 +35,20 @@ const Message = () => {
   return (
     <>
       {/* use MUI Grid for all our layouts. */}
-
-      <Grid item xs={4}>
-        <MessageSelectCoworkers
-          currentUserID={currentUserID}
-          selectedCoworkerUUID={selectedCoworkerUUID}
-          handleCoworkerListItemClick={handleCoworkerListItemClick}
-        />
-      </Grid>
-      <Grid item xs={5}>
-        <MessageChatArea
-          currentUserUUID={currentUserUUID}
-          selectedCoworkerUUID={selectedCoworkerUUID}
-        />
+      <Grid container spacing="0px" direction="row">
+        <Grid item xs={4}>
+          <MessageSelectCoworkers
+            currentUserID={currentUserID}
+            selectedCoworkerUUID={selectedCoworkerUUID}
+            handleCoworkerListItemClick={handleCoworkerListItemClick}
+          />
+        </Grid>
+        <Grid item xs={8}>
+          <MessageChatArea
+            currentUserUUID={currentUserUUID}
+            selectedCoworkerUUID={selectedCoworkerUUID}
+          />
+        </Grid>
       </Grid>
     </>
   );
