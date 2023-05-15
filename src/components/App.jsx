@@ -2,6 +2,7 @@ import { Typography, AppBar, Grid, Button, CssBaseline } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import DrawerComp from "./DrawerComp";
 import DateCard from "./DateCard";
+import Dashboard from "./Dashboard";
 
 const App = () => {
 	// state for current date and time
@@ -31,27 +32,15 @@ const App = () => {
 				direction="row"
 				alignItems="center"
 			>
+				{/* this grid item is for the universal drawer which persists on all pages.  */}
 				<Grid
 					item
-					xs={4}
+					xs={3}
 				>
 					<DrawerComp />
 				</Grid>
-				<Grid
-					item
-					xs={4}
-				>
-					{/* <Button>debug refresh</Button> */}
-					<DateCard />
-				</Grid>
-				<Grid
-					item
-					xs={4}
-				>
-					<DateCard />
-					<DateCard />
-					<DateCard />
-				</Grid>
+				{/* the following component block is for conditional rendering of dashboard / messages / calendar */}
+				<Dashboard />
 			</Grid>
 		</>
 	);

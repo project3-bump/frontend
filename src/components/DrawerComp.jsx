@@ -18,6 +18,7 @@ import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 
 const drawerWidth = 240;
+
 const DrawerComp = () => {
 	return (
 		<Box sx={{ display: "flex" }}>
