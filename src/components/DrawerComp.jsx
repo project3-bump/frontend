@@ -17,24 +17,25 @@ import MailIcon from "@mui/icons-material/Mail";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
 
+const drawerWidth = 240;
 const DrawerComp = () => {
 	return (
 		<Box sx={{ display: "flex" }}>
 			<CssBaseline />
 			<Drawer
 				sx={{
-					width: 240,
-					flexShrink: 0,
+					width: drawerWidth,
+					// flexShrink: 0,
 
 					// use this to customize the CSS of the drawer
 					"& .MuiDrawer-paper": {
-						width: 240,
+						width: drawerWidth,
 						boxSizing: "border-box",
 						backgroundColor: "primary.main",
 					},
 				}}
 				variant="permanent"
-				anchor="left"
+				// anchor="left"
 			>
 				<Toolbar>
 					<List>
