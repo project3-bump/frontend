@@ -64,6 +64,9 @@ const Theme = createTheme({
     white: {
       main: "#FFFFFF",
     },
+    grey: {
+      main: "#F3F3F3",
+    },
     smiley5: {
       main: "#149200",
     },
