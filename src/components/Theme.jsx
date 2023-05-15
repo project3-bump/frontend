@@ -5,51 +5,51 @@ const Theme = createTheme({
 		// font type and weights
 
 		fontFamily: "Inter",
-		h1: {
-			fontSize: "3rem",
-			fontWeight: 500,
-		},
-		h2: {
-			fontSize: "2.5rem",
-			fontWeight: 500,
-		},
-		h3: {
-			fontSize: "2rem",
-			fontWeight: 500,
-		},
-		h4: {
-			fontSize: "1.5rem",
-			fontWeight: 500,
-		},
-		h5: {
-			fontSize: "1.25rem",
-			fontWeight: 500,
-		},
-		h6: {
-			fontSize: "1rem",
-			fontWeight: 500,
-		},
-		body1: {
-			fontSize: "1rem",
-			fontWeight: 400,
-		},
-		body2: {
-			fontSize: "0.875rem",
-			fontWeight: 400,
-		},
-		button: {
-			fontSize: "1rem",
-			fontWeight: 500,
-			textTransform: "none",
-		},
-		subtitle1: {
-			fontSize: "1rem",
-			fontWeight: 500,
-		},
-		subtitle2: {
-			fontSize: "0.875rem",
-			fontWeight: 500,
-		},
+		// h1: {
+		// 	fontSize: "3rem",
+		// 	fontWeight: 500,
+		// },
+		// h2: {
+		// 	fontSize: "2.5rem",
+		// 	fontWeight: 500,
+		// },
+		// h3: {
+		// 	fontSize: "2rem",
+		// 	fontWeight: 500,
+		// },
+		// h4: {
+		// 	fontSize: "1.5rem",
+		// 	fontWeight: 500,
+		// },
+		// h5: {
+		// 	fontSize: "1.25rem",
+		// 	fontWeight: 500,
+		// },
+		// h6: {
+		// 	fontSize: "1rem",
+		// 	fontWeight: 500,
+		// },
+		// body1: {
+		// 	fontSize: "1rem",
+		// 	fontWeight: 400,
+		// },
+		// body2: {
+		// 	fontSize: "0.875rem",
+		// 	fontWeight: 400,
+		// },
+		// button: {
+		// 	fontSize: "1rem",
+		// 	fontWeight: 500,
+		// 	textTransform: "none",
+		// },
+		// subtitle1: {
+		// 	fontSize: "1rem",
+		// 	fontWeight: 500,
+		// },
+		// subtitle2: {
+		// 	fontSize: "0.875rem",
+		// 	fontWeight: 500,
+		// },
 	},
 
 	// primary and secondary palette
