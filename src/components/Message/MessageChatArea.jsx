@@ -21,6 +21,8 @@ const MessageChatArea = (props) => {
           <MessageChatConversation
             senderUUID={senderUUID}
             receiverUUID={receiverUUID}
+            chatData={props.chatData}
+            setChatData={props.setChatData}
           />
         )}
         {props.selectedCoworkerUUID === 0 && (

@@ -8,8 +8,10 @@ const Message = () => {
   const currentUserID = "645c9534106669bbe242e824"; // now hardcoded, awaiting lian kai to complete login process then we connect this portion!
   const [currentUserUUID, setCurrentUserUUID] = useState(0);
   const [selectedCoworkerUUID, setSelectedCoworkerUUID] = useState(0);
+  const [chatData, setChatData] = useState([]);
   const handleCoworkerListItemClick = (idx) => {
     setSelectedCoworkerUUID(idx);
+    getCurrentUserSentMessages();
   };
 
   const getCurrentUserUUID = async () => {
@@ -28,8 +30,34 @@ const Message = () => {
     }
   };
 
+  const getCurrentUserSentMessages = async () => {
+    const res = await fetch(
+      import.meta.env.VITE_SERVER + "/bump/chats/sender/" + currentUserUUID,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (res.status === 200) {
+      const data = await res.json();
+      let checkedChatData = [];
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].receiverUUID === selectedCoworkerUUID) {
+          checkedChatData.push(data[i]);
+        }
+      }
+      checkedChatData.sort((a, b) => {
+        a.timestamp - b.timestamp;
+      });
+      setChatData(checkedChatData);
+    } else {
+      alert("an error has occured at POST user sent chats data");
+    }
+  };
+
   useEffect(() => {
     getCurrentUserUUID();
+    getCurrentUserSentMessages();
   }, []);
 
   return (
@@ -47,6 +75,8 @@ const Message = () => {
           <MessageChatArea
             currentUserUUID={currentUserUUID}
             selectedCoworkerUUID={selectedCoworkerUUID}
+            chatData={chatData}
+            setChatData={setChatData}
           />
         </Grid>
       </Grid>
