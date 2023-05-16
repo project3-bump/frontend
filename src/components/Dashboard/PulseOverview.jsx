@@ -7,58 +7,65 @@ import {
 	Button,
 	Box,
 	Grid,
+	Fab,
 } from "@mui/material";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
+import SentimentNeutralIcon from "@mui/icons-material/SentimentNeutral";
+import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
+import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import PulseCard from "./PulseCard";
 
 const PulseOverview = (props) => {
 	return (
 		<>
+			{/* parent container */}
 			<Box
 				sx={{
 					backgroundColor: "white.main",
 					borderRadius: "8px",
-					border: "2px solid",
-					borderColor: "blue",
+
 					padding: "16px",
-					width: "500px",
+					width: "600px",
 				}}
 			>
 				<CardContent>
-					<Box sx={{ display: "flex", flexDirection: "row" }}>
+					{/* container for title row */}
+					<Box
+						sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+					>
 						<Typography
-							sx={{ fontSize: 14 }}
-							color="text.secondary"
+							variant="h5"
 							gutterBottom
+							sx={{ marginRight: "auto" }}
 						>
 							Pulse Overview
 						</Typography>
-						<Button
-							variant="contained"
-							sx={{
-								borderRadius: "20px",
-								width: "200px",
-								justifyContent: "flex-start",
-								// position: "absolute",
-								// top: 0,
-								// left: 0,
-							}}
-						>
-							Manager View
-						</Button>
-						<Button
-							variant="contained"
-							sx={{
-								borderRadius: "20px",
-								width: "150px",
-								justifyContent: "flex-start",
-								position: "relative",
-								// top: 0,
-								right: "50px",
-							}}
-						>
-							Personal View
-						</Button>
+						<Box sx={{ display: "flex", position: "relative" }}>
+							<Button
+								variant="contained"
+								sx={{ borderRadius: "20px", width: "200px" }}
+							>
+								Manager View
+							</Button>
+							<Button
+								variant="contained"
+								sx={{
+									borderRadius: "20px",
+									width: "150px",
+									marginLeft: "-50px",
+									position: "relative",
+									zIndex: 1,
+								}}
+							>
+								Personal View
+							</Button>
+						</Box>
 					</Box>
 
+					{/* date */}
 					<Typography
 						sx={{ fontSize: 14 }}
 						color="text.secondary"
@@ -68,6 +75,57 @@ const PulseOverview = (props) => {
 						} ${props.todaysDateState.month} ${new Date().getFullYear()}
 						`}
 					</Typography>
+
+					{/* container for today's mood */}
+					<Box
+						sx={{
+							backgroundColor: "smiley5Backing.main",
+							borderRadius: "8px",
+
+							padding: "16px",
+							width: "100%",
+							display: "flex",
+							flexDirection: "row",
+						}}
+					>
+						<Box>
+							<Typography>{props.todaysDateState.day}</Typography>
+							<Typography>{`${props.todaysDateState.date} ${
+								props.todaysDateState.month
+							} ${new Date().getFullYear()}`}</Typography>
+							<Typography>
+								placeholder you're feeling very happy placeholder
+							</Typography>
+						</Box>
+						<Box>
+							<SentimentSatisfiedIcon sx={{ fontSize: 80 }} />
+						</Box>
+					</Box>
+
+					<Box>
+						<Typography>Previous Pulses</Typography>
+						<Box
+							sx={{
+								display: "flex",
+								flexDirection: "row",
+								alignItems: "center",
+							}}
+						>
+							<Fab
+								color="grey.main"
+								aria-label="add"
+							>
+								<ArrowBackIosIcon />
+							</Fab>
+							<PulseCard todaysDateState={props.todaysDateState} />
+							<Fab
+								color="grey.main"
+								aria-label="add"
+							>
+								<ArrowForwardIosIcon />
+							</Fab>
+						</Box>
+					</Box>
 				</CardContent>
 			</Box>
 		</>
