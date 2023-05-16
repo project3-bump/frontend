@@ -16,12 +16,12 @@ const DateCard = (props) => {
 		<>
 			<Box
 				sx={{
-					backgroundColor: "white",
+					backgroundColor: "white.main",
 					borderRadius: "8px",
 					border: "2px solid",
 					borderColor: "blue",
 					padding: "16px",
-                    width: "200px"
+					width: "200px",
 				}}
 			>
 				<CardContent>
