@@ -13,7 +13,7 @@ const Notifications = () => {
 		<>
 			<Box
 				sx={{
-					backgroundColor: "white",
+					backgroundColor: "white.main",
 					borderRadius: "8px",
 					border: "2px solid",
 					borderColor: "blue",

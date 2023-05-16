@@ -23,7 +23,7 @@ const Dashboard = (props) => {
 							<MoodSelector />
 						</Grid>
 						<Grid item>
-							<PulseOverview />
+							<PulseOverview todaysDateState={props.todaysDateState} />
 						</Grid>
 					</Grid>
 				</Grid>
