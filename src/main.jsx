@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./components/App";
+import Primary from "./components/Primary";
 import { ThemeProvider } from "@emotion/react";
 import Theme from "./components/Theme";
 import { CssBaseline } from "@mui/material";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-	<React.StrictMode>
-		<CssBaseline />
-		<ThemeProvider theme={Theme}>
-			<App />
-		</ThemeProvider>
-	</React.StrictMode>
+  <React.StrictMode>
+    <CssBaseline />
+    <ThemeProvider theme={Theme}>
+      <Primary />
+    </ThemeProvider>
+  </React.StrictMode>
 );
