@@ -9,9 +9,10 @@ const Message = () => {
   const [currentUserUUID, setCurrentUserUUID] = useState(0);
   const [selectedCoworkerUUID, setSelectedCoworkerUUID] = useState(0);
   const [chatData, setChatData] = useState([]);
+  const [filteredChatData, setFilteredChatData] = useState([]);
   const handleCoworkerListItemClick = (idx) => {
     setSelectedCoworkerUUID(idx);
-    getCurrentUserSentMessages();
+    getCurrentUserMessages();
   };
 
   const getCurrentUserUUID = async () => {
@@ -30,7 +31,8 @@ const Message = () => {
     }
   };
 
-  const getCurrentUserSentMessages = async () => {
+  const getCurrentUserMessages = async () => {
+    let temp = [];
     const res = await fetch(
       import.meta.env.VITE_SERVER + "/bump/chats/sender/" + currentUserUUID,
       {
@@ -40,25 +42,53 @@ const Message = () => {
     );
     if (res.status === 200) {
       const data = await res.json();
-      let checkedChatData = [];
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].receiverUUID === selectedCoworkerUUID) {
-          checkedChatData.push(data[i]);
-        }
-      }
-      checkedChatData.sort((a, b) => {
-        a.timestamp - b.timestamp;
+      data.map((item) => {
+        temp.push(item);
       });
-      setChatData(checkedChatData);
+    } else {
+      alert("an error has occured at POST user sent chats data");
+    }
+
+    const res2 = await fetch(
+      import.meta.env.VITE_SERVER + "/bump/chats/receiver/" + currentUserUUID,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (res2.status === 200) {
+      const data = await res2.json();
+      data.map((item) => {
+        temp.push(item);
+      });
+      setChatData(temp);
+      console.log(temp);
     } else {
       alert("an error has occured at POST user sent chats data");
     }
   };
 
+  const filterChatData = () => {
+    let checkedChatData = [];
+    for (let i = 0; i < chatData.length; i++) {
+      if (chatData[i].receiverUUID === selectedCoworkerUUID) {
+        checkedChatData.push(chatData[i]);
+      }
+    }
+    checkedChatData.sort((a, b) => {
+      a.timestamp - b.timestamp;
+    });
+    setFilteredChatData(checkedChatData);
+  };
+
   useEffect(() => {
     getCurrentUserUUID();
-    getCurrentUserSentMessages();
+    getCurrentUserMessages();
   }, []);
+
+  useEffect(() => {
+    filterChatData();
+  }, [chatData]);
 
   return (
     <>
@@ -75,8 +105,7 @@ const Message = () => {
           <MessageChatArea
             currentUserUUID={currentUserUUID}
             selectedCoworkerUUID={selectedCoworkerUUID}
-            chatData={chatData}
-            setChatData={setChatData}
+            filteredChatData={filteredChatData}
           />
         </Grid>
       </Grid>

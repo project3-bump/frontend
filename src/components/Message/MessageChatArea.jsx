@@ -21,8 +21,7 @@ const MessageChatArea = (props) => {
           <MessageChatConversation
             senderUUID={senderUUID}
             receiverUUID={receiverUUID}
-            chatData={props.chatData}
-            setChatData={props.setChatData}
+            filteredChatData={props.filteredChatData}
           />
         )}
         {props.selectedCoworkerUUID === 0 && (
@@ -41,7 +40,16 @@ const MessageChatArea = (props) => {
           </Container>
         )}
       </Grid>
-      <Grid item xs={1} sx={{ backgroundColor: "grey.main" }}>
+      <Grid
+        item
+        xs={1}
+        sx={{
+          display: "flex",
+          backgroundColor: "grey.main",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <MessageNewBumpButton receiverUUID={receiverUUID} />
       </Grid>
     </Grid>
