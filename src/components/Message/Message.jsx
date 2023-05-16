@@ -62,7 +62,6 @@ const Message = () => {
         temp.push(item);
       });
       setChatData(temp);
-      console.log(temp);
     } else {
       alert("an error has occured at POST user sent chats data");
     }
