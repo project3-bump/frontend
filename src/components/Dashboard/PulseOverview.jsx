@@ -102,6 +102,7 @@ const PulseOverview = (props) => {
 						</Box>
 					</Box>
 
+					{/* container for previous pulses */}
 					<Box>
 						<Typography>Previous Pulses</Typography>
 						<Box
