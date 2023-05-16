@@ -7,27 +7,27 @@ const Theme = createTheme({
 		fontFamily: "Inter",
 		h1: {
 			fontSize: "3rem",
-			fontWeight: 500,
+			fontWeight: 1000,
 		},
 		h2: {
 			fontSize: "2.5rem",
-			fontWeight: 500,
+			fontWeight: 1000,
 		},
 		h3: {
 			fontSize: "2rem",
-			fontWeight: 500,
+			fontWeight: 1000,
 		},
 		h4: {
 			fontSize: "1.5rem",
-			fontWeight: 500,
+			fontWeight: 1000,
 		},
 		h5: {
 			fontSize: "1.25rem",
-			fontWeight: 500,
+			fontWeight: 1000,
 		},
 		h6: {
 			fontSize: "1rem",
-			fontWeight: 500,
+			fontWeight: 1000,
 		},
 		body1: {
 			fontSize: "1rem",
@@ -60,6 +60,12 @@ const Theme = createTheme({
 		},
 		secondary: {
 			main: "#FDF1E3",
+		},
+		white: {
+			main: "#FFFFFF",
+		},
+		grey: {
+			main: "#F3F3F3",
 		},
 		smiley5: {
 			main: "#149200",
@@ -96,6 +102,19 @@ const Theme = createTheme({
 		},
 		smiley0Backing: {
 			main: "#F3F3F3",
+		},
+	},
+
+	components: {
+		MuiListItemButton: {
+			styleOverrides: {
+				root: {
+					"&.Mui-selected": {
+						color: "#FFFFFF",
+						backgroundColor: "#325A55",
+					},
+				},
+			},
 		},
 	},
 });
