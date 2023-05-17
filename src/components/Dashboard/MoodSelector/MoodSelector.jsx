@@ -19,7 +19,7 @@ const iconSize = 80;
 
 const MoodSelector = (props) => {
 	const [userID, setUserID] = useState(props.id);
-	const [moodValue, setMoodValue] = useState("");
+	const [moodValue, setMoodValue] = useState([]);
 	const didMount = useRef(false);
 	const shouldUpdate = useRef(false);
 

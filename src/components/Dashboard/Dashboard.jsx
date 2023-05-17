@@ -34,17 +34,20 @@ const Dashboard = (props) => {
 
 	return (
 		<>
-			<Grid container>
+			<Grid
+				container
+				justifyContent="flex-start"
+			>
 				{/* this grid item contains moodselector and pulse overview. */}
 				<Grid
 					item
-					xs={9}
+					xs={7}
 				>
 					<Grid
 						container
 						spacing="5px"
 						direction="column"
-						alignItems="center"
+						alignItems="left"
 					>
 						<Grid item>
 							<MoodSelector
@@ -65,7 +68,7 @@ const Dashboard = (props) => {
 				{/* this grid item contains today's calendar and notiifcations. */}
 				<Grid
 					item
-					xs={3}
+					xs={5}
 				>
 					<Grid
 						container
