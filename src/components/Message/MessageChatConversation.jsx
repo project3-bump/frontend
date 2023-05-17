@@ -4,6 +4,7 @@ import { Avatar, Container, Grid, Typography } from "@mui/material";
 const MessageChatConversation = (props) => {
   const [senderNameAndPic, setSenderNameAndPic] = useState({});
   const [receiverNameAndPic, setReceiverNameAndPic] = useState({});
+
   const getNameAndPic = async () => {
     const res = await fetch(
       import.meta.env.VITE_SERVER + "/bump/users/namepiconly/namepiconly",
@@ -39,6 +40,13 @@ const MessageChatConversation = (props) => {
       alert("an error has occured at getting receiver name and pic via uuid");
     }
   };
+
+  const f = new Intl.DateTimeFormat("en-GB", {
+    dateStyle: "long", //short gives 05/06/2023
+    timeStyle: "short",
+    timeZone: "Singapore",
+  });
+
   useEffect(() => {
     getNameAndPic();
   }, []);
@@ -102,7 +110,9 @@ const MessageChatConversation = (props) => {
                         mt: "5px",
                         pl: "15px",
                         pr: "15px",
-                        ml: "80px",
+                        ml: "100px",
+                        mr: "0px",
+                        width: "fit-content",
                       }}
                     >
                       {item.message}
@@ -112,9 +122,12 @@ const MessageChatConversation = (props) => {
                       sx={{
                         mt: "5px",
                         ml: "290px",
+                        mr: "0px",
                       }}
                     >
-                      {item.timesent.slice(0, 16).replace("T", " ")}
+                      {/* {item.timesent.slice(0, 16).replace("T", " ")} */}
+                      {/* {f.format(new Date("2023-05-09T18:00:00"))} */}
+                      {f.format(new Date(item.timesent))}
                     </Typography>
                     <Avatar
                       src={`../../../../pictures/${senderNameAndPic.profilePicture}`}
@@ -145,6 +158,7 @@ const MessageChatConversation = (props) => {
                         pl: "15px",
                         pr: "15px",
                         mr: "80px",
+                        width: "fit-content",
                       }}
                     >
                       {item.message}
@@ -156,7 +170,7 @@ const MessageChatConversation = (props) => {
                         mr: "290px",
                       }}
                     >
-                      {item.timesent.slice(0, 16).replace("T", " ")}
+                      {f.format(new Date(item.timesent))}
                     </Typography>
                     <Avatar
                       src={`../../../../pictures/${receiverNameAndPic.profilePicture}`}
