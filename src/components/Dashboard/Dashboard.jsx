@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import DateCard from "./DateCard";
 import Notifications from "./Notifications";
-import MoodSelector from "./MoodSelector";
-import PulseOverview from "./PulseOverview";
+import MoodSelector from "./MoodSelector/MoodSelector";
+import PulseOverview from "./PulseOverview/PulseOverview";
 import { fetchData } from "../../helpers/common";
 
 const Dashboard = (props) => {
 	const [userMoods, setUserMoods] = useState([]);
+
 	const getUserMoods = async () => {
 		const { ok, data } = await fetchData(
 			"/bump/users/oneuser",
@@ -18,11 +19,10 @@ const Dashboard = (props) => {
 			}
 		);
 
-		// console.log("debug", props.id);
-		console.log(data);
-
 		if (ok) {
 			setUserMoods(data);
+			console.log("user mood set");
+			console.log(data);
 		} else {
 			console.log("get user moods failed");
 		}
@@ -47,7 +47,10 @@ const Dashboard = (props) => {
 						alignItems="center"
 					>
 						<Grid item>
-							<MoodSelector />
+							<MoodSelector
+								id={props.id}
+								getUserMoods={getUserMoods}
+							/>
 						</Grid>
 						<Grid item>
 							<PulseOverview

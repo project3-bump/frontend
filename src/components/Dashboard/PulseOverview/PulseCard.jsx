@@ -25,9 +25,20 @@ const PulseCard = (props) => {
 				width: "33%",
 			}}
 		>
-			<SentimentSatisfiedIcon sx={{ fontSize: 80, marginLeft: "auto" }} />
-			{props.dateInfo.day}
+			{props.userMood === 1 && (
+				<SentimentVeryDissatisfiedIcon sx={{ fontSize: 80 }} />
+			)}
+			{props.userMood === 2 && (
+				<SentimentDissatisfiedIcon sx={{ fontSize: 80 }} />
+			)}
+			{props.userMood === 3 && <SentimentNeutralIcon sx={{ fontSize: 80 }} />}
+			{props.userMood === 4 && <SentimentSatisfiedIcon sx={{ fontSize: 80 }} />}
+			{props.userMood === 5 && (
+				<SentimentSatisfiedAltIcon sx={{ fontSize: 80 }} />
+			)}
+
 			<br />
+			{props.dateInfo.day}
 			{`${props.dateInfo.date} ${
 				props.dateInfo.month
 			} ${new Date().getFullYear()}

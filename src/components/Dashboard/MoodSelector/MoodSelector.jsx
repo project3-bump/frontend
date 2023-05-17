@@ -17,49 +17,50 @@ import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAlt
 
 const iconSize = 80;
 
-const MoodSelector = () => {
-	const [userID, setUserID] = useState("6463ecfd972c17d8803d1c23");
+const MoodSelector = (props) => {
+	const [userID, setUserID] = useState(props.id);
 	const [moodValue, setMoodValue] = useState("");
 	const didMount = useRef(false);
 	const shouldUpdate = useRef(false);
 
-	const handleToggle = (value) => {
-		// shouldUpdate.current = moodValue !== value;
-		// setMoodValue((prevValue) => (prevValue === value ? null : value));
+	const handleToggle = async (value) => {
+		shouldUpdate.current = moodValue !== value;
+		setMoodValue((prevValue) => (prevValue === value ? null : value));
 		setMoodValue(value);
+		await props.getUserMoods();
 	};
 
-	//   const updateMood = async () => {
-	//     // if (!shouldUpdate.current) return;
-	//     const res = await fetch(
-	//       import.meta.env.VITE_SERVER + `/bump/users/${userID}`,
-	//       {
-	//         method: "PATCH",
-	//         headers: {
-	//           "Content-Type": "application/json",
-	//         },
-	//         body: JSON.stringify({
-	//           mood: moodValue,
-	//         }),
-	//       }
-	//     );
+	const updateMood = async () => {
+		if (!shouldUpdate.current) return;
+		const res = await fetch(
+			import.meta.env.VITE_SERVER + `/bump/users/${userID}`,
+			{
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					mood: moodValue,
+				}),
+			}
+		);
 
-	//     if (res.status === 200) {
-	//       console.log("Registers");
-	//     } else {
-	//       alert("an error has occured");
-	//     }
-	//   };
+		if (res.status === 200) {
+			console.log("Registers");
+		} else {
+			alert("an error has occured");
+		}
+	};
 
-	//   useEffect(() => {
-	//     // check if this is the first render; don't run the updateMood function if so
-	//     if (!didMount.current) {
-	//       didMount.current = true;
-	//       return;
-	//     }
-	//     console.log(moodValue);
-	//     updateMood();
-	//   }, [moodValue]);
+	useEffect(() => {
+		// check if this is the first render; don't run the updateMood function if so
+		if (!didMount.current) {
+			didMount.current = true;
+			return;
+		}
+		console.log(moodValue);
+		updateMood();
+	}, [moodValue]);
 
 	return (
 		<>
