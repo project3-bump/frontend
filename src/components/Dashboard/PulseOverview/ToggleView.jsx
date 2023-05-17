@@ -28,9 +28,11 @@ const ToggleView = (props) => {
           sx={{
             borderRadius: "20px",
             width: "180px",
-            marginRight: "10px",
+            marginRight: "5px",
+            paddingRight: "30px",
             bgcolor: props.isManagerView === true ? "primary.main" : "inherit",
             color: props.isManagerView === true ? "white.main" : "inherit",
+            zIndex: 1,
           }}
           onClick={(event) => props.handleToggle(event, true)}
         >
@@ -41,8 +43,9 @@ const ToggleView = (props) => {
           variant="contained"
           sx={{
             borderRadius: "20px",
-            width: "165px",
+            width: "170px",
             marginLeft: "-40px",
+            paddingLeft: "40px",
             position: "relative",
             zIndex: 1,
             bgcolor: props.isManagerView === false ? "primary.main" : "inherit",
