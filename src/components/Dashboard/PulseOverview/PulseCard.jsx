@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
 	Card,
 	CardContent,
@@ -25,13 +25,24 @@ const PulseCard = (props) => {
 				width: "33%",
 			}}
 		>
-			<SentimentSatisfiedIcon sx={{ fontSize: 80, marginLeft: "auto" }} />
-			{props.todaysDateState.day}
+			{props.userMood === 1 && (
+				<SentimentVeryDissatisfiedIcon sx={{ fontSize: 80 }} />
+			)}
+			{props.userMood === 2 && (
+				<SentimentDissatisfiedIcon sx={{ fontSize: 80 }} />
+			)}
+			{props.userMood === 3 && <SentimentNeutralIcon sx={{ fontSize: 80 }} />}
+			{props.userMood === 4 && <SentimentSatisfiedIcon sx={{ fontSize: 80 }} />}
+			{props.userMood === 5 && (
+				<SentimentSatisfiedAltIcon sx={{ fontSize: 80 }} />
+			)}
+
 			<br />
-			{`${props.todaysDateState.date} ${
-				props.todaysDateState.month
+			{props.dateInfo.day}
+			{`${props.dateInfo.date} ${
+				props.dateInfo.month
 			} ${new Date().getFullYear()}
-						`}
+						MOOD ${props.userMood}`}
 		</Box>
 	);
 };

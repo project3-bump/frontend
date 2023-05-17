@@ -5,8 +5,7 @@ import DateCard from "./Dashboard/DateCard";
 import Dashboard from "./Dashboard/Dashboard";
 import Notifications from "./Dashboard/Notifications";
 
-const App = () => {
-
+const App = (props) => {
 	// initializes and sets dateState
 	const date = new Date();
 	const formattedDate = {
@@ -61,7 +60,11 @@ const App = () => {
 					xs={9}
 				>
 					{/* define the component to be rendered here */}
-					<Dashboard todaysDateState={todaysDateState} />
+					<Dashboard
+						todaysDateState={todaysDateState}
+						id={props.id}
+						setID={props.setID}
+					/>
 				</Grid>
 			</Grid>
 		</>

@@ -4,7 +4,7 @@ import React from "react";
 const MessageNewBumpButton = (props) => {
   return (
     <>
-      {props.receiverUUID !== 0 && (
+      {props.buttonState === 0 && (
         <Button
           sx={{
             color: "white.main",

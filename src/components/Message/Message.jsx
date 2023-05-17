@@ -5,14 +5,20 @@ import MessageSelectCoworkers from "./MessageSelectCoworkers";
 import MessageChatArea from "./MessageChatArea";
 
 const Message = () => {
-  const currentUserID = "645c9534106669bbe242e824"; // now hardcoded, awaiting lian kai to complete login process then we connect this portion!
+  const currentUserID = "6463184817b94e1a322f2231"; // now hardcoded, awaiting lian kai to complete login process then we connect this portion!
+  const isManager = true; //now hardcoded, need to change to props
   const [currentUserUUID, setCurrentUserUUID] = useState(0);
   const [selectedCoworkerUUID, setSelectedCoworkerUUID] = useState(0);
   const [chatData, setChatData] = useState([]);
   const [filteredChatData, setFilteredChatData] = useState([]);
+  const [contentBankData, setContentBankData] = useState([]);
+  const [buttonState, setButtonState] = useState(0); // button state: 0 is new bump, 1 is next
+  const [formState, setFormState] = useState(0); // form state: 0 is nothing, 1 is main topics, 2 is subtopics, 3 is input forms, 4 is message preview.
   const handleCoworkerListItemClick = (idx) => {
     setSelectedCoworkerUUID(idx);
     getCurrentUserMessages();
+    setButtonState(0);
+    setFormState(0);
   };
 
   const getCurrentUserUUID = async () => {
@@ -70,19 +76,57 @@ const Message = () => {
   const filterChatData = () => {
     let checkedChatData = [];
     for (let i = 0; i < chatData.length; i++) {
-      if (chatData[i].receiverUUID === selectedCoworkerUUID) {
+      if (
+        chatData[i].receiverUUID === selectedCoworkerUUID ||
+        chatData[i].senderUUID === selectedCoworkerUUID
+      ) {
         checkedChatData.push(chatData[i]);
       }
     }
     checkedChatData.sort((a, b) => {
-      a.timestamp - b.timestamp;
+      return new Date(a.timestamp) - new Date(b.timestamp);
     });
     setFilteredChatData(checkedChatData);
+  };
+
+  const getContentBank = async () => {
+    if (isManager) {
+      //get manager content bank
+      const res = await fetch(
+        import.meta.env.VITE_SERVER + "/bump/contentbank/manager"
+      );
+      if (res.status === 200) {
+        const data = await res.json();
+        setContentBankData(
+          data.sort((a, b) => {
+            return a.topicID - b.topicID;
+          })
+        );
+      } else {
+        alert("an error has occured at getting manager content bank data");
+      }
+    } else {
+      //get common content bank
+      const res = await fetch(
+        import.meta.env.VITE_SERVER + "/bump/contentbank/common"
+      );
+      if (res.status === 200) {
+        const data = await res.json();
+        setContentBankData(
+          data.sort((a, b) => {
+            return a.topicID - b.topicID;
+          })
+        );
+      } else {
+        alert("an error has occured at getting common content bank data");
+      }
+    }
   };
 
   useEffect(() => {
     getCurrentUserUUID();
     getCurrentUserMessages();
+    getContentBank();
   }, []);
 
   useEffect(() => {
@@ -105,6 +149,12 @@ const Message = () => {
             currentUserUUID={currentUserUUID}
             selectedCoworkerUUID={selectedCoworkerUUID}
             filteredChatData={filteredChatData}
+            getCurrentUserMessages={getCurrentUserMessages}
+            buttonState={buttonState}
+            setButtonState={setButtonState}
+            formState={formState}
+            setFormState={setFormState}
+            contentBankData={contentBankData}
           />
         </Grid>
       </Grid>
