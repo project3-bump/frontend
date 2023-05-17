@@ -17,6 +17,7 @@ import MessageChatConversation from "./MessageChatConversation";
 import MessageNewBumpButton from "./MessageNewBumpButton";
 
 const MessageChatArea = (props) => {
+  console.log(props.filteredChatData);
   const senderUUID = props.currentUserUUID;
   const receiverUUID = props.selectedCoworkerUUID;
   const [topicChosen, setTopicChosen] = useState(-1);
@@ -34,15 +35,17 @@ const MessageChatArea = (props) => {
   const [fullMessage, setFullMessage] = useState("");
   const [bumpDate, setBumpDate] = useState("");
   const [bumpTime, setBumpTime] = useState("");
+  const [bumpDateTime, setBumpDateTime] = useState("");
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     if (props.buttonState === 0) {
       props.setButtonState(1);
       props.setFormState(1);
     } else if (props.formState === 5) {
-      setFullMessage(
-        fullMessage + `Scheduled bump timing: ${bumpDate}, ${bumpTime}`
-      );
+      setBumpDateTime(`Scheduled bump timing: ${bumpDate}, ${bumpTime}`);
+      props.setFormState(props.formState + 1);
+    } else if (props.formState === 6) {
+      sendNewMessage();
       props.setFormState(0);
       props.setButtonState(0);
       setTopicChosen(-1);
@@ -57,7 +60,6 @@ const MessageChatArea = (props) => {
         5: "",
         6: "",
       });
-      sendNewMessage();
     } else {
       props.setFormState(props.formState + 1);
     }
@@ -84,6 +86,7 @@ const MessageChatArea = (props) => {
         senderUUID: senderUUID,
         receiverUUID: receiverUUID,
         message: fullMessage,
+        bumpDateTime: bumpDateTime,
       }),
     });
     if (res.status === 200) {
@@ -178,12 +181,27 @@ const MessageChatArea = (props) => {
         )}
 
         {props.formState === 2 && (
-          <Container sx={{ textAlign: "center" }}>
-            <Typography sx={{ display: "flex" }}>
-              What about
+          <Container
+            sx={{
+              textAlign: "center",
+            }}
+          >
+            <Container
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Typography
                 sx={{
-                  display: "flex",
+                  width: "fit-content",
+                }}
+              >
+                What about
+              </Typography>
+              <Typography
+                sx={{
                   width: "fit-content",
                   backgroundColor: "primary.main",
                   color: "white.main",
@@ -196,8 +214,15 @@ const MessageChatArea = (props) => {
               >
                 {props.contentBankData[topicChosen].topic}
               </Typography>
-              would you like to talk about?
-            </Typography>
+              <Typography
+                sx={{
+                  width: "fit-content",
+                }}
+              >
+                would you like to talk about?
+              </Typography>
+            </Container>
+
             <List>
               {props.contentBankData[topicChosen].topicPrompts.map((item) => {
                 return (
@@ -448,6 +473,22 @@ const MessageChatArea = (props) => {
           </>
         )}
 
+        {props.formState === 6 && (
+          <Container
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "grey.main",
+              width: "80%",
+              height: "40%",
+              borderRadius: "25px",
+            }}
+          >
+            <Typography>Bump sent!</Typography>
+          </Container>
+        )}
+
         {props.selectedCoworkerUUID !== 0 &&
           props.filteredChatData.length !== 0 &&
           props.formState === 0 && (
@@ -500,7 +541,8 @@ const MessageChatArea = (props) => {
 
         {props.selectedCoworkerUUID !== 0 &&
           props.buttonState === 1 &&
-          props.formState !== 5 && (
+          props.formState !== 5 &&
+          props.formState !== 6 && (
             <Button
               sx={{
                 color: "white.main",
@@ -508,7 +550,15 @@ const MessageChatArea = (props) => {
                 width: "75vh",
                 borderRadius: "20px",
               }}
-              onClick={handleButtonClick}
+              onClick={() => {
+                if (props.formState === 1 && topicChosen !== -1) {
+                  handleButtonClick();
+                } else if (props.formState === 2 && subTopicChosen !== -1) {
+                  handleButtonClick();
+                } else if (props.formState !== 1 && props.formState !== 2) {
+                  handleButtonClick();
+                }
+              }}
             >
               Next
             </Button>
@@ -527,6 +577,22 @@ const MessageChatArea = (props) => {
               onClick={handleButtonClick}
             >
               Send bump
+            </Button>
+          )}
+
+        {props.selectedCoworkerUUID !== 0 &&
+          props.buttonState === 1 &&
+          props.formState === 6 && (
+            <Button
+              sx={{
+                color: "white.main",
+                backgroundColor: "primary.main",
+                width: "75vh",
+                borderRadius: "20px",
+              }}
+              onClick={handleButtonClick}
+            >
+              Return to conversation
             </Button>
           )}
       </Grid>

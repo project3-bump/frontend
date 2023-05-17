@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import MessageSelectCoworkers from "./MessageSelectCoworkers";
 import MessageChatArea from "./MessageChatArea";
 
-const Message = () => {
-  const currentUserID = "6463184817b94e1a322f2231"; // now hardcoded, awaiting lian kai to complete login process then we connect this portion!
+const Message = (props) => {
+  const currentUserID = props.id;
   const isManager = true; //now hardcoded, need to change to props
   const [currentUserUUID, setCurrentUserUUID] = useState(0);
   const [selectedCoworkerUUID, setSelectedCoworkerUUID] = useState(0);
@@ -84,7 +84,7 @@ const Message = () => {
       }
     }
     checkedChatData.sort((a, b) => {
-      return new Date(a.timestamp) - new Date(b.timestamp);
+      return new Date(a.timesent) - new Date(b.timesent);
     });
     setFilteredChatData(checkedChatData);
   };
@@ -97,6 +97,8 @@ const Message = () => {
       );
       if (res.status === 200) {
         const data = await res.json();
+        console.log("fetching manager contentbank");
+        console.log(res);
         setContentBankData(
           data.sort((a, b) => {
             return a.topicID - b.topicID;
@@ -112,6 +114,9 @@ const Message = () => {
       );
       if (res.status === 200) {
         const data = await res.json();
+        console.log("fetching common employee contentbank");
+        console.log(res);
+        console.log(data);
         setContentBankData(
           data.sort((a, b) => {
             return a.topicID - b.topicID;
