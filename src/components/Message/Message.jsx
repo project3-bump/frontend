@@ -149,6 +149,7 @@ const Message = () => {
             currentUserUUID={currentUserUUID}
             selectedCoworkerUUID={selectedCoworkerUUID}
             filteredChatData={filteredChatData}
+            getCurrentUserMessages={getCurrentUserMessages}
             buttonState={buttonState}
             setButtonState={setButtonState}
             formState={formState}
