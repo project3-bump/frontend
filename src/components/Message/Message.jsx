@@ -6,7 +6,8 @@ import MessageChatArea from "./MessageChatArea";
 
 const Message = (props) => {
   const currentUserID = props.id;
-  const isManager = true; //now hardcoded, need to change to props
+  const [isManager, setIsManager] = useState(false);
+  const [currentUserDetails, setCurrentUserDetails] = useState({});
   const [currentUserUUID, setCurrentUserUUID] = useState(0);
   const [selectedCoworkerUUID, setSelectedCoworkerUUID] = useState(0);
   const [chatData, setChatData] = useState([]);
@@ -21,20 +22,30 @@ const Message = (props) => {
     setFormState(0);
   };
 
-  const getCurrentUserUUID = async () => {
-    const currentUserUUID = await fetch(
-      import.meta.env.VITE_SERVER + "/bump/users/uuid/" + currentUserID,
+  const getCurrentUserDetails = async () => {
+    const res = await fetch(
+      import.meta.env.VITE_SERVER + "/bump/users/" + currentUserID,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       }
     );
-    if (currentUserUUID.status === 200) {
-      const data = await currentUserUUID.json();
-      setCurrentUserUUID(data);
+    if (res.status === 200) {
+      const data = await res.json();
+      setCurrentUserDetails(data);
     } else {
       alert("an error has occured at POST user data");
     }
+  };
+
+  const getCurrentUserUUID = async () => {
+    setCurrentUserUUID(currentUserDetails.uuid);
+  };
+
+  const getCurrentUserIsManager = async () => {
+    console.log("curr deets");
+    console.log(currentUserDetails);
+    setIsManager(currentUserDetails.isManager);
   };
 
   const getCurrentUserMessages = async () => {
@@ -129,14 +140,22 @@ const Message = (props) => {
   };
 
   useEffect(() => {
-    getCurrentUserUUID();
+    getCurrentUserDetails();
     getCurrentUserMessages();
-    getContentBank();
   }, []);
 
   useEffect(() => {
     filterChatData();
   }, [chatData]);
+
+  useEffect(() => {
+    getCurrentUserUUID();
+    getCurrentUserIsManager();
+  }, [currentUserDetails]);
+
+  useEffect(() => {
+    getContentBank();
+  }, [isManager]);
 
   return (
     <>
