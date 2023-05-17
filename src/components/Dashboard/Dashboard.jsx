@@ -1,36 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
 import DateCard from "./DateCard";
 import Notifications from "./Notifications";
 import MoodSelector from "./MoodSelector";
 import PulseOverview from "./PulseOverview";
+import { fetchData } from "../../helpers/common";
 
 const Dashboard = (props) => {
 	const [userMoods, setUserMoods] = useState([]);
-
 	const getUserMoods = async () => {
 		const { ok, data } = await fetchData(
 			"/bump/users/oneuser",
 			undefined,
-			"GET",
+			"PUT",
 			{
 				id: props.id,
 			}
 		);
-		console.log(props.id)
+
+		// console.log("debug", props.id);
 		console.log(data);
 
 		if (ok) {
 			setUserMoods(data);
 		} else {
-			console.log(data);
+			console.log("get user moods failed");
 		}
 	};
+
+	useEffect(() => {
+		getUserMoods();
+	}, []);
 
 	return (
 		<>
 			<Grid container>
-
 				{/* this grid item contains moodselector and pulse overview. */}
 				<Grid
 					item

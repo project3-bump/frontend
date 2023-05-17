@@ -63,6 +63,7 @@ const App = (props) => {
 					<Dashboard
 						todaysDateState={todaysDateState}
 						id={props.id}
+						setID={props.setID}
 					/>
 				</Grid>
 			</Grid>

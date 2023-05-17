@@ -10,7 +10,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
 		<CssBaseline />
 		<ThemeProvider theme={Theme}>
-			<App />
+			<Primary />
+			{/* <App /> */}
 		</ThemeProvider>
 	</React.StrictMode>
 );
