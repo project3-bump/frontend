@@ -107,6 +107,7 @@ const MessageChatArea = (props) => {
           backgroundColor: "white.main",
         }}
       >
+        {/* coworker selected, no chat history, form state is blank (new bump button not pressed) */}
         {props.selectedCoworkerUUID !== 0 &&
           props.filteredChatData.length === 0 &&
           props.formState === 0 && (
@@ -128,6 +129,7 @@ const MessageChatArea = (props) => {
             </Container>
           )}
 
+        {/* new bump button was pressed, back button activated */}
         {props.formState !== 0 && (
           <IconButton
             sx={{ position: "fixed", top: "0" }}
@@ -151,6 +153,7 @@ const MessageChatArea = (props) => {
           </IconButton>
         )}
 
+        {/* form state 1: choosing topic */}
         {props.formState === 1 && (
           <Container sx={{ textAlign: "center" }}>
             <Typography>What would you like to talk about?</Typography>
@@ -180,6 +183,7 @@ const MessageChatArea = (props) => {
           </Container>
         )}
 
+        {/* form state 2: choosing sub topic */}
         {props.formState === 2 && (
           <Container
             sx={{
@@ -249,6 +253,7 @@ const MessageChatArea = (props) => {
           </Container>
         )}
 
+        {/* form state 3: writing message prompts */}
         {props.formState === 3 && (
           <Container>
             <Typography
@@ -363,6 +368,7 @@ const MessageChatArea = (props) => {
           </Container>
         )}
 
+        {/* form state 4: suggested message, still can edit */}
         {props.formState === 4 && (
           <>
             <Container>
@@ -411,6 +417,7 @@ const MessageChatArea = (props) => {
           </>
         )}
 
+        {/* form state 5: input bump timing */}
         {props.formState === 5 && (
           <>
             <Container>
@@ -473,6 +480,7 @@ const MessageChatArea = (props) => {
           </>
         )}
 
+        {/* form state 6: bump and message submitted, prompt to go back to convo */}
         {props.formState === 6 && (
           <Container
             sx={{
@@ -489,6 +497,7 @@ const MessageChatArea = (props) => {
           </Container>
         )}
 
+        {/* coworker chat selected, there is chat history present, form state 0 so no new bump initialised, just show chat history */}
         {props.selectedCoworkerUUID !== 0 &&
           props.filteredChatData.length !== 0 &&
           props.formState === 0 && (
@@ -499,6 +508,7 @@ const MessageChatArea = (props) => {
             />
           )}
 
+        {/* no coworker chat selected. user is prompted to choose a coworker */}
         {props.selectedCoworkerUUID === 0 && (
           <Container
             sx={{
@@ -525,6 +535,7 @@ const MessageChatArea = (props) => {
           justifyContent: "center",
         }}
       >
+        {/* co worker chat is selected, button is not clicked yet. shows "new bump" */}
         {props.selectedCoworkerUUID !== 0 && props.buttonState === 0 && (
           <Button
             sx={{
@@ -539,6 +550,7 @@ const MessageChatArea = (props) => {
           </Button>
         )}
 
+        {/* co worker chat is selected, we are in new bump state, but not formState 5 or 6, hence button shows "next" */}
         {props.selectedCoworkerUUID !== 0 &&
           props.buttonState === 1 &&
           props.formState !== 5 &&
@@ -564,6 +576,7 @@ const MessageChatArea = (props) => {
             </Button>
           )}
 
+        {/* co worker chat is selected, we are in new bump state, and formState 5, hence button shows "send bump" */}
         {props.selectedCoworkerUUID !== 0 &&
           props.buttonState === 1 &&
           props.formState === 5 && (
@@ -580,6 +593,7 @@ const MessageChatArea = (props) => {
             </Button>
           )}
 
+        {/* co worker chat is selected, we are in new bump state, and formState 6, hence button shows "return to convo" */}
         {props.selectedCoworkerUUID !== 0 &&
           props.buttonState === 1 &&
           props.formState === 6 && (
