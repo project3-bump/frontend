@@ -17,7 +17,6 @@ import MessageChatConversation from "./MessageChatConversation";
 import MessageNewBumpButton from "./MessageNewBumpButton";
 
 const MessageChatArea = (props) => {
-  console.log(props.filteredChatData);
   const senderUUID = props.currentUserUUID;
   const receiverUUID = props.selectedCoworkerUUID;
   const [topicChosen, setTopicChosen] = useState(-1);

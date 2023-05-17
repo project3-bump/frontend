@@ -43,8 +43,6 @@ const Message = (props) => {
   };
 
   const getCurrentUserIsManager = async () => {
-    console.log("curr deets");
-    console.log(currentUserDetails);
     setIsManager(currentUserDetails.isManager);
   };
 
@@ -108,8 +106,6 @@ const Message = (props) => {
       );
       if (res.status === 200) {
         const data = await res.json();
-        console.log("fetching manager contentbank");
-        console.log(res);
         setContentBankData(
           data.sort((a, b) => {
             return a.topicID - b.topicID;
@@ -125,9 +121,6 @@ const Message = (props) => {
       );
       if (res.status === 200) {
         const data = await res.json();
-        console.log("fetching common employee contentbank");
-        console.log(res);
-        console.log(data);
         setContentBankData(
           data.sort((a, b) => {
             return a.topicID - b.topicID;
