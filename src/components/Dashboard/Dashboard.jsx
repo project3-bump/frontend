@@ -53,6 +53,7 @@ const Dashboard = (props) => {
 							<PulseOverview
 								todaysDateState={props.todaysDateState}
 								id={props.id}
+								userMoods={userMoods}
 							/>
 						</Grid>
 					</Grid>

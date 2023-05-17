@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
 	Card,
 	CardContent,
@@ -26,12 +26,12 @@ const PulseCard = (props) => {
 			}}
 		>
 			<SentimentSatisfiedIcon sx={{ fontSize: 80, marginLeft: "auto" }} />
-			{props.todaysDateState.day}
+			{props.dateInfo.day}
 			<br />
-			{`${props.todaysDateState.date} ${
-				props.todaysDateState.month
+			{`${props.dateInfo.date} ${
+				props.dateInfo.month
 			} ${new Date().getFullYear()}
-						`}
+						MOOD ${props.userMood}`}
 		</Box>
 	);
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Card,
 	CardContent,
@@ -19,6 +19,49 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import PulseCard from "./PulseCard";
 
 const PulseOverview = (props) => {
+	const [firstSliceIndex, setFirstSliceIndex] = useState(-4);
+	const [lastSliceIndex, setLastSliceIndex] = useState(-1);
+
+	const prevMoods = props.userMoods.slice(firstSliceIndex, lastSliceIndex);
+	if (prevMoods) {
+		for (const i of prevMoods) {
+			const dateObj = new Date(i.date);
+			const day = dateObj.toLocaleString("default", { weekday: "long" });
+			const date = dateObj.getDate();
+			const month = dateObj.toLocaleString("default", { month: "long" });
+			const year = dateObj.getFullYear();
+
+			i.dateObj = {
+				day,
+				date,
+				month,
+				year,
+			};
+			// console.log("moodsobj", i);
+		}
+	}
+
+	const handlePrevMoodsChange = () => {
+		if (!(firstSliceIndex <= props.userMoods.length * -1)) {
+			setFirstSliceIndex(firstSliceIndex - 1);
+			setLastSliceIndex(lastSliceIndex - 1);
+			console.log(firstSliceIndex, lastSliceIndex);
+			console.log(props.userMoods);
+		} else console.log("length exceeded");
+	};
+
+	const handleNextMoodsChange = () => {
+		if (!(lastSliceIndex >= -1)) {
+			setFirstSliceIndex(firstSliceIndex + 1);
+			setLastSliceIndex(lastSliceIndex + 1);
+			console.log(firstSliceIndex, lastSliceIndex);
+		} else console.log("length exceeded");
+	};
+
+	useEffect(() => {
+		// console.log("prevmoods", prevMoods);
+	}, []);
+
 	return (
 		<>
 			{/* parent container */}
@@ -115,13 +158,26 @@ const PulseOverview = (props) => {
 							<Fab
 								color="grey.main"
 								aria-label="add"
+								onClick={handlePrevMoodsChange}
 							>
 								<ArrowBackIosIcon />
 							</Fab>
-							<PulseCard todaysDateState={props.todaysDateState} />
+							{prevMoods &&
+								prevMoods.map((el) => (
+									<PulseCard
+										key={el.date}
+										dateInfo={{
+											day: el.dateObj.day,
+											date: el.dateObj.date,
+											month: el.dateObj.month,
+										}}
+										userMood={el.mood}
+									/>
+								))}
 							<Fab
 								color="grey.main"
 								aria-label="add"
+								onClick={handleNextMoodsChange}
 							>
 								<ArrowForwardIosIcon />
 							</Fab>
