@@ -10,8 +10,10 @@ import React, { useState, useEffect } from "react";
 import MessageSelectIndividualCoworker from "./MessageSelectIndividualCoworker";
 
 const MessageSelectCoworkers = (props) => {
+  const [isManager, setIsManager] = useState(false);
   const [directReportData, setDirectReportData] = useState([]);
   const [allUserData, setAllUserData] = useState([]);
+  const [managerUUID, setManagerUUID] = useState(0);
 
   const getAllUserData = async () => {
     const res = await fetch(import.meta.env.VITE_SERVER + "/bump/users");
@@ -33,7 +35,12 @@ const MessageSelectCoworkers = (props) => {
     );
     if (currentUserData.status === 200) {
       const data = await currentUserData.json();
-      setDirectReportData(data.directReports);
+      if (data.isManager) {
+        setDirectReportData(data.directReports);
+        setIsManager(true);
+      } else {
+        setManagerUUID(data.managerUUID);
+      }
     } else {
       alert("an error has occured at POST user data");
     }
@@ -57,6 +64,15 @@ const MessageSelectCoworkers = (props) => {
           />
         );
       })}
+      {!isManager && (
+        <MessageSelectIndividualCoworker
+          key={managerUUID}
+          UUID={managerUUID}
+          allUserData={allUserData}
+          selectedCoworkerUUID={props.selectedCoworkerUUID}
+          handleCoworkerListItemClick={props.handleCoworkerListItemClick}
+        />
+      )}
     </List>
   );
 };
