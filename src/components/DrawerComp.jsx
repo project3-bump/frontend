@@ -36,7 +36,7 @@ const DrawerComp = (props) => {
       props.setDashBoardView(false);
     }
   };
-  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const handleListItemClick = (index) => {
     setSelectedIndex(index);
   };
