@@ -86,7 +86,7 @@ const DrawerComp = (props) => {
                   backgroundColor: "primary.main",
                   borderRadius: "40px",
                   marginBottom: "8px",
-                  // color: "white.main",
+                  color: "white.main",
                   "&.Mui-selected": {
                     backgroundColor: "secondary.main",
                     color: "black",

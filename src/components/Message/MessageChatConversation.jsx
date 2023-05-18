@@ -153,6 +153,7 @@ const MessageChatConversation = (props) => {
                         mt: "5px",
                         pl: "15px",
                         pr: "15px",
+                        ml: "10px",
                         mr: "100px",
                         width: "fit-content",
                       }}
