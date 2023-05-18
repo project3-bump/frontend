@@ -144,7 +144,7 @@ const MessageChatConversation = (props) => {
                       pb: "10px",
                     }}
                   >
-                    <Typography
+                    <Container
                       sx={{
                         borderWidth: "1px",
                         borderStyle: "solid",
@@ -153,12 +153,15 @@ const MessageChatConversation = (props) => {
                         mt: "5px",
                         pl: "15px",
                         pr: "15px",
-                        mr: "80px",
+                        ml: "10px",
+                        mr: "100px",
                         width: "fit-content",
                       }}
                     >
-                      {item.message}
-                    </Typography>
+                      <Typography>{item.message}</Typography>
+                      <br />
+                      <Typography>{item.bumpDateTime}</Typography>
+                    </Container>
 
                     <Typography
                       sx={{

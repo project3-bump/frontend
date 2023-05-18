@@ -27,6 +27,7 @@ const MoodSelector = (props) => {
     shouldUpdate.current = moodValue !== value;
     setMoodValue((prevValue) => (prevValue === value ? null : value));
     setMoodValue(value);
+    props.setMoodSelected(true);
     await props.getUserMoods();
   };
 
