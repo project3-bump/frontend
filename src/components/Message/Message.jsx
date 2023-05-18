@@ -4,9 +4,10 @@ import React, { useState, useEffect } from "react";
 import MessageSelectCoworkers from "./MessageSelectCoworkers";
 import MessageChatArea from "./MessageChatArea";
 
-const Message = () => {
-  const currentUserID = "6463184817b94e1a322f2231"; // now hardcoded, awaiting lian kai to complete login process then we connect this portion!
-  const isManager = true; //now hardcoded, need to change to props
+const Message = (props) => {
+  const currentUserID = props.id;
+  const [isManager, setIsManager] = useState(false);
+  const [currentUserDetails, setCurrentUserDetails] = useState({});
   const [currentUserUUID, setCurrentUserUUID] = useState(0);
   const [selectedCoworkerUUID, setSelectedCoworkerUUID] = useState(0);
   const [chatData, setChatData] = useState([]);
@@ -21,20 +22,28 @@ const Message = () => {
     setFormState(0);
   };
 
-  const getCurrentUserUUID = async () => {
-    const currentUserUUID = await fetch(
-      import.meta.env.VITE_SERVER + "/bump/users/uuid/" + currentUserID,
+  const getCurrentUserDetails = async () => {
+    const res = await fetch(
+      import.meta.env.VITE_SERVER + "/bump/users/" + currentUserID,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       }
     );
-    if (currentUserUUID.status === 200) {
-      const data = await currentUserUUID.json();
-      setCurrentUserUUID(data);
+    if (res.status === 200) {
+      const data = await res.json();
+      setCurrentUserDetails(data);
     } else {
       alert("an error has occured at POST user data");
     }
+  };
+
+  const getCurrentUserUUID = async () => {
+    setCurrentUserUUID(currentUserDetails.uuid);
+  };
+
+  const getCurrentUserIsManager = async () => {
+    setIsManager(currentUserDetails.isManager);
   };
 
   const getCurrentUserMessages = async () => {
@@ -84,7 +93,7 @@ const Message = () => {
       }
     }
     checkedChatData.sort((a, b) => {
-      return new Date(a.timestamp) - new Date(b.timestamp);
+      return new Date(a.timesent) - new Date(b.timesent);
     });
     setFilteredChatData(checkedChatData);
   };
@@ -124,14 +133,22 @@ const Message = () => {
   };
 
   useEffect(() => {
-    getCurrentUserUUID();
+    getCurrentUserDetails();
     getCurrentUserMessages();
-    getContentBank();
   }, []);
 
   useEffect(() => {
     filterChatData();
   }, [chatData]);
+
+  useEffect(() => {
+    getCurrentUserUUID();
+    getCurrentUserIsManager();
+  }, [currentUserDetails]);
+
+  useEffect(() => {
+    getContentBank();
+  }, [isManager]);
 
   return (
     <>

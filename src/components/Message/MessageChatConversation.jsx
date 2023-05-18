@@ -57,16 +57,10 @@ const MessageChatConversation = (props) => {
 
   return (
     <>
-      {/* <div>{senderNameAndPic.name}</div>
-      <div>{senderNameAndPic.profilePicture}</div>
-      <div>{receiverNameAndPic.name}</div>
-      <div>{receiverNameAndPic.profilePicture}</div>
-      <div>{props.receiverUUID}</div> */}
       <Container>
         <Container
           sx={{
             display: "flex",
-            // positions: "fixed", top: "0"
           }}
         >
           <Avatar
@@ -99,9 +93,13 @@ const MessageChatConversation = (props) => {
                     sx={{
                       pt: "10px",
                       pb: "10px",
+                      width: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-end",
                     }}
                   >
-                    <Typography
+                    <Container
                       sx={{
                         borderWidth: "1px",
                         borderStyle: "solid",
@@ -115,25 +113,23 @@ const MessageChatConversation = (props) => {
                         width: "fit-content",
                       }}
                     >
-                      {item.message}
-                    </Typography>
+                      <Typography>{item.message}</Typography>
+                      <br />
+                      <Typography>{item.bumpDateTime}</Typography>
+                    </Container>
 
                     <Typography
                       sx={{
                         mt: "5px",
-                        ml: "290px",
                         mr: "0px",
                       }}
                     >
-                      {/* {item.timesent.slice(0, 16).replace("T", " ")} */}
-                      {/* {f.format(new Date("2023-05-09T18:00:00"))} */}
                       {f.format(new Date(item.timesent))}
                     </Typography>
                     <Avatar
                       src={`../../../../pictures/${senderNameAndPic.profilePicture}`}
                       sx={{
                         mt: "5px",
-                        ml: "380px",
                       }}
                     ></Avatar>
                   </Container>
@@ -148,7 +144,7 @@ const MessageChatConversation = (props) => {
                       pb: "10px",
                     }}
                   >
-                    <Typography
+                    <Container
                       sx={{
                         borderWidth: "1px",
                         borderStyle: "solid",
@@ -157,12 +153,15 @@ const MessageChatConversation = (props) => {
                         mt: "5px",
                         pl: "15px",
                         pr: "15px",
-                        mr: "80px",
+                        ml: "10px",
+                        mr: "100px",
                         width: "fit-content",
                       }}
                     >
-                      {item.message}
-                    </Typography>
+                      <Typography>{item.message}</Typography>
+                      <br />
+                      <Typography>{item.bumpDateTime}</Typography>
+                    </Container>
 
                     <Typography
                       sx={{

@@ -34,15 +34,17 @@ const MessageChatArea = (props) => {
   const [fullMessage, setFullMessage] = useState("");
   const [bumpDate, setBumpDate] = useState("");
   const [bumpTime, setBumpTime] = useState("");
+  const [bumpDateTime, setBumpDateTime] = useState("");
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     if (props.buttonState === 0) {
       props.setButtonState(1);
       props.setFormState(1);
     } else if (props.formState === 5) {
-      setFullMessage(
-        fullMessage + `Scheduled bump timing: ${bumpDate}, ${bumpTime}`
-      );
+      setBumpDateTime(`Scheduled bump timing: ${bumpDate}, ${bumpTime}`);
+      props.setFormState(props.formState + 1);
+    } else if (props.formState === 6) {
+      sendNewMessage();
       props.setFormState(0);
       props.setButtonState(0);
       setTopicChosen(-1);
@@ -57,7 +59,6 @@ const MessageChatArea = (props) => {
         5: "",
         6: "",
       });
-      sendNewMessage();
     } else {
       props.setFormState(props.formState + 1);
     }
@@ -84,6 +85,7 @@ const MessageChatArea = (props) => {
         senderUUID: senderUUID,
         receiverUUID: receiverUUID,
         message: fullMessage,
+        bumpDateTime: bumpDateTime,
       }),
     });
     if (res.status === 200) {
@@ -104,6 +106,7 @@ const MessageChatArea = (props) => {
           backgroundColor: "white.main",
         }}
       >
+        {/* coworker selected, no chat history, form state is blank (new bump button not pressed) */}
         {props.selectedCoworkerUUID !== 0 &&
           props.filteredChatData.length === 0 &&
           props.formState === 0 && (
@@ -125,6 +128,7 @@ const MessageChatArea = (props) => {
             </Container>
           )}
 
+        {/* new bump button was pressed, back button activated */}
         {props.formState !== 0 && (
           <IconButton
             sx={{ position: "fixed", top: "0" }}
@@ -148,6 +152,7 @@ const MessageChatArea = (props) => {
           </IconButton>
         )}
 
+        {/* form state 1: choosing topic */}
         {props.formState === 1 && (
           <Container sx={{ textAlign: "center" }}>
             <Typography>What would you like to talk about?</Typography>
@@ -177,13 +182,29 @@ const MessageChatArea = (props) => {
           </Container>
         )}
 
+        {/* form state 2: choosing sub topic */}
         {props.formState === 2 && (
-          <Container sx={{ textAlign: "center" }}>
-            <Typography sx={{ display: "flex" }}>
-              What about
+          <Container
+            sx={{
+              textAlign: "center",
+            }}
+          >
+            <Container
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <Typography
                 sx={{
-                  display: "flex",
+                  width: "fit-content",
+                }}
+              >
+                What about
+              </Typography>
+              <Typography
+                sx={{
                   width: "fit-content",
                   backgroundColor: "primary.main",
                   color: "white.main",
@@ -196,8 +217,15 @@ const MessageChatArea = (props) => {
               >
                 {props.contentBankData[topicChosen].topic}
               </Typography>
-              would you like to talk about?
-            </Typography>
+              <Typography
+                sx={{
+                  width: "fit-content",
+                }}
+              >
+                would you like to talk about?
+              </Typography>
+            </Container>
+
             <List>
               {props.contentBankData[topicChosen].topicPrompts.map((item) => {
                 return (
@@ -224,6 +252,7 @@ const MessageChatArea = (props) => {
           </Container>
         )}
 
+        {/* form state 3: writing message prompts */}
         {props.formState === 3 && (
           <Container>
             <Typography
@@ -338,6 +367,7 @@ const MessageChatArea = (props) => {
           </Container>
         )}
 
+        {/* form state 4: suggested message, still can edit */}
         {props.formState === 4 && (
           <>
             <Container>
@@ -386,6 +416,7 @@ const MessageChatArea = (props) => {
           </>
         )}
 
+        {/* form state 5: input bump timing */}
         {props.formState === 5 && (
           <>
             <Container>
@@ -448,6 +479,24 @@ const MessageChatArea = (props) => {
           </>
         )}
 
+        {/* form state 6: bump and message submitted, prompt to go back to convo */}
+        {props.formState === 6 && (
+          <Container
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "grey.main",
+              width: "80%",
+              height: "40%",
+              borderRadius: "25px",
+            }}
+          >
+            <Typography>Bump sent!</Typography>
+          </Container>
+        )}
+
+        {/* coworker chat selected, there is chat history present, form state 0 so no new bump initialised, just show chat history */}
         {props.selectedCoworkerUUID !== 0 &&
           props.filteredChatData.length !== 0 &&
           props.formState === 0 && (
@@ -458,6 +507,7 @@ const MessageChatArea = (props) => {
             />
           )}
 
+        {/* no coworker chat selected. user is prompted to choose a coworker */}
         {props.selectedCoworkerUUID === 0 && (
           <Container
             sx={{
@@ -484,6 +534,7 @@ const MessageChatArea = (props) => {
           justifyContent: "center",
         }}
       >
+        {/* co worker chat is selected, button is not clicked yet. shows "new bump" */}
         {props.selectedCoworkerUUID !== 0 && props.buttonState === 0 && (
           <Button
             sx={{
@@ -498,9 +549,11 @@ const MessageChatArea = (props) => {
           </Button>
         )}
 
+        {/* co worker chat is selected, we are in new bump state, but not formState 5 or 6, hence button shows "next" */}
         {props.selectedCoworkerUUID !== 0 &&
           props.buttonState === 1 &&
-          props.formState !== 5 && (
+          props.formState !== 5 &&
+          props.formState !== 6 && (
             <Button
               sx={{
                 color: "white.main",
@@ -508,12 +561,21 @@ const MessageChatArea = (props) => {
                 width: "75vh",
                 borderRadius: "20px",
               }}
-              onClick={handleButtonClick}
+              onClick={() => {
+                if (props.formState === 1 && topicChosen !== -1) {
+                  handleButtonClick();
+                } else if (props.formState === 2 && subTopicChosen !== -1) {
+                  handleButtonClick();
+                } else if (props.formState !== 1 && props.formState !== 2) {
+                  handleButtonClick();
+                }
+              }}
             >
               Next
             </Button>
           )}
 
+        {/* co worker chat is selected, we are in new bump state, and formState 5, hence button shows "send bump" */}
         {props.selectedCoworkerUUID !== 0 &&
           props.buttonState === 1 &&
           props.formState === 5 && (
@@ -527,6 +589,23 @@ const MessageChatArea = (props) => {
               onClick={handleButtonClick}
             >
               Send bump
+            </Button>
+          )}
+
+        {/* co worker chat is selected, we are in new bump state, and formState 6, hence button shows "return to convo" */}
+        {props.selectedCoworkerUUID !== 0 &&
+          props.buttonState === 1 &&
+          props.formState === 6 && (
+            <Button
+              sx={{
+                color: "white.main",
+                backgroundColor: "primary.main",
+                width: "75vh",
+                borderRadius: "20px",
+              }}
+              onClick={handleButtonClick}
+            >
+              Return to conversation
             </Button>
           )}
       </Grid>
