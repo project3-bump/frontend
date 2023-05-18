@@ -8,10 +8,9 @@ import App from "./components/App";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
-		<CssBaseline />
-		<ThemeProvider theme={Theme}>
-			<Primary />
-			{/* <App /> */}
-		</ThemeProvider>
+			<CssBaseline />
+			<ThemeProvider theme={Theme}>
+				<Primary />
+			</ThemeProvider>
 	</React.StrictMode>
 );

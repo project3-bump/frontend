@@ -4,71 +4,87 @@ import DrawerComp from "./DrawerComp";
 import DateCard from "./Dashboard/DateCard";
 import Dashboard from "./Dashboard/Dashboard";
 import Notifications from "./Dashboard/Notifications";
+import { fetchData } from "../helpers/common";
+import Message from "./Message/Message";
 
 const App = (props) => {
-	// initializes and sets dateState
-	const date = new Date();
-	const formattedDate = {
-		month: date.toLocaleString("default", { month: "long" }),
-		day: date.toLocaleString("default", { weekday: "long" }),
-		date: date.getDate(),
-		time: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-	};
+  const [dashboardView, setDashBoardView] = useState(true);
+  const [messagesView, setMessagesView] = useState(false);
 
-	// state for current date and time
-	const [todaysDateState, setTodaysDateState] = useState(formattedDate);
+  // initializes and sets dateState
+  const date = new Date();
+  const formattedDate = {
+    month: date.toLocaleString("default", { month: "long" }),
+    day: date.toLocaleString("default", { weekday: "long" }),
+    date: date.getDate(),
+    time: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+  };
 
-	const handleDateDebug = () => {
-		const date = new Date();
-		const formattedDate = {
-			month: date.toLocaleString("default", { month: "long" }),
-			day: date.toLocaleString("default", { weekday: "long" }),
-			date: date.getDate(),
-			time: date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-		};
-		setTodaysDateState(formattedDate);
-		console.log(todaysDateState);
-	};
+  // state for current date and time
+  const [todaysDateState, setTodaysDateState] = useState(formattedDate);
 
-	// state for storing user data after retrieval from DB
-	const [userState, setUserState] = useState([]);
+  const getUserState = async () => {
+    const { ok, data } = await fetchData(
+      "/bump/users/" + props.id,
+      undefined,
+      "POST"
+    );
 
-	// toggled state for manager or direct report view
+    if (ok) {
+      setUserState(data);
+      console.log("userstate", userState);
+    } else {
+      console.log("get bad mood reports failed");
+    }
+  };
 
-	const [isManagerState, setIsManagerState] = useState([]);
+  useEffect(() => {
+    // Code to run on component mount
+    // Add event listeners, fetch data, initialize state, etc.
+    getUserState();
+  }, []);
 
-	return (
-		<>
-			<Grid
-				container
-				spacing="0px"
-				direction="row"
-				alignItems="center"
-				sx={{ backgroundColor: "secondary.main" }}
-			>
-				{/* this grid item is for the universal drawer which persists on all pages.  */}
-				<Grid
-					item
-					xs={3}
-				>
-					<DrawerComp />
-				</Grid>
+  // state for storing user data after retrieval from DB
+  const [userState, setUserState] = useState([]);
 
-				{/* this code block is the start of all items to the right of the drawer */}
-				<Grid
-					item
-					xs={9}
-				>
-					{/* define the component to be rendered here */}
-					<Dashboard
-						todaysDateState={todaysDateState}
-						id={props.id}
-						setID={props.setID}
-					/>
-				</Grid>
-			</Grid>
-		</>
-	);
+  // toggled state for manager or direct report view
+
+  const [isManagerState, setIsManagerState] = useState([]);
+
+  return (
+    <>
+      <Grid
+        container
+        spacing="5px"
+        direction="row"
+        alignItems="left"
+        sx={{ backgroundColor: "secondary.main" }}
+      >
+        {/* this grid item is for the universal drawer which persists on all pages.  */}
+        <Grid item xs={2.5}>
+          <DrawerComp
+            userState={userState}
+            setDashBoardView={setDashBoardView}
+            setMessagesView={setMessagesView}
+          />
+        </Grid>
+
+        {/* this code block is the start of all items to the right of the drawer */}
+        <Grid item xs={9.5}>
+          {/* define the component to be rendered here */}
+          {dashboardView ? (
+            <Dashboard
+              todaysDateState={todaysDateState}
+              id={props.id}
+              setID={props.setID}
+            />
+          ) : (
+            <Message id={props.id} /> // Or any other component you want to render when the condition is false
+          )}
+        </Grid>
+      </Grid>
+    </>
+  );
 };
 
 export default App;
