@@ -19,7 +19,7 @@ Mongoose: Mongoose is an Object Data Modeling (ODM) library for MongoDB and serv
 
 Material-UI: Bump utilizes the Material-UI library for building a visually appealing and user-friendly interface. Material-UI provides pre-designed components and styling options that enhance the overall look and feel of the application.
 
-============
+
 Installation
 ============
 To run Bump locally on your machine, follow these steps:
@@ -30,7 +30,7 @@ To run Bump locally on your machine, follow these steps:
 4. Start the development server: npm run dev
 5. Open your browser and access Bump on localhost
 
-=====
+
 Usage
 =====
 
