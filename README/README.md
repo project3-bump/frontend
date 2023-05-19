@@ -1,3 +1,7 @@
+============
+Introduction
+============
+
 Bump is a corporate app designed to facilitate effective communication between managers and their reports. It provides a platform for managers and employees to discuss topics such as job performance, workplace concerns, and general well-being through mood logging. With Bump, teams can enhance their communication, leading to better collaboration and a healthier work environment.
 
 =================
