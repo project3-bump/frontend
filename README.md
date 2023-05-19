@@ -47,3 +47,5 @@ Dashboard View: Managers have access to a comprehensive dashboard that displays 
 Example:
 
 ![ManagerView](./Screenshots/ManagerView.png)
+  
+Message View: Managers and employees can utilise formatted messages to send messages to each other about certain topics. They can schedule a meeting with each other using this function as well. 
