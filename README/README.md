@@ -4,6 +4,7 @@ This app, called Bump, is a workplace mental health and communication app. Upon 
 Upon selection of mood, the mood will registered and saved into the backend database. User will also know that the today's mood has been saved when it is reflected into the card and the color will persist. User is also able to see previous few day's moods, each mood populated with a different color for quick recognition.
 
 Example:
+
 ![MoodSelectedAndPrevMoods](./Screenshots/MoodSelectedAndPrevMoods.png)
 
 This is to allow the user to take a quick assessment of their overall mood and mental health.
